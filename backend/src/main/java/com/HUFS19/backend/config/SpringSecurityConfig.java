@@ -51,15 +51,14 @@ public class SpringSecurityConfig {
 
         http.authorizeHttpRequests(auth->auth
                 .requestMatchers(
-                        "/userAPI/logout",
-                        "/userAPI/nav",
+                        "/authAPI/logout",
                         "/productAPI/like"
                         )
                 .authenticated()
                 .anyRequest().permitAll()
         );
          CustumLoginFilter custumLoginFilter = new CustumLoginFilter(authenticationManager(authenticationConfiguration), jwtUtil);
-         custumLoginFilter.setFilterProcessesUrl("/userAPI/login");
+         custumLoginFilter.setFilterProcessesUrl("/authAPI/login");
 
         http.addFilterBefore(new JwtFilter(jwtUtil), CustumLoginFilter.class);
         http.addFilterAt(custumLoginFilter, UsernamePasswordAuthenticationFilter.class);

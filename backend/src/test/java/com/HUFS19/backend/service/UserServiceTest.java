@@ -18,13 +18,13 @@ class UserServiceTest {
     UserRepository userRepository;
 
     @Test
-    void 아이디_중복_체크_case_true() {
+    void check_id_redundent_case_true() {
         boolean result = userService.checkIdDuplication("testID");
         Assertions.assertEquals(result, true);
     }
     @Test
-    void 아이디_중복_체크_case_false() {
-        boolean result = userService.checkIdDuplication("NewID");
+    void check_id_redundent_case_false() {
+        boolean result = userService.checkIdDuplication("new");
         Assertions.assertEquals(result, false);
     }
 

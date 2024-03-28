@@ -1,15 +1,18 @@
 package com.HUFS19.backend.repository.userInfo;
 
+import com.HUFS19.backend.dto.profile.ProfileDto;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 
-import java.util.List;
 import java.util.Optional;
 
 public class UserInfoRepositoryImp implements UserInfoRepository{
-    private EntityManager em;
-
+    private final EntityManager em;
+    private final JPAQueryFactory query;
     public UserInfoRepositoryImp(EntityManager em){
-        this.em=em;
+        this.em = em;
+        this.query = new JPAQueryFactory(em);
     }
 
     @Override
@@ -19,11 +22,21 @@ public class UserInfoRepositoryImp implements UserInfoRepository{
     }
 
     @Override
-    public Optional<UserInfo> findByUserId(String userId) {
-        List<UserInfo> result = em.createQuery("select u from UserInfo u where u.user.id = :userId", UserInfo.class)
-                .setParameter("userId", userId)
-                .getResultList();
+    public Optional<ProfileDto> findByUserId(String userId) {
+        QUserInfo userInfo = QUserInfo.userInfo;
 
-        return result.stream().findAny();
+        return Optional.ofNullable(
+                query.select(
+                        Projections.bean(
+                                ProfileDto.class,
+                                userInfo.user.id.as("userId"),
+                                userInfo.icon.as("icon"),
+                                userInfo.introduce.as("introduce"),
+                                userInfo.nickname.as("nickname")
+                        )
+                ).from(userInfo)
+                .where(userInfo.user.id.eq(userId))
+                .fetchOne()
+        );
     }
 }
