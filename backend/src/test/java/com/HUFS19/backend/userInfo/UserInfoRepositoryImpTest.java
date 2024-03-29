@@ -1,9 +1,9 @@
 package com.HUFS19.backend.userInfo;
 
+import com.HUFS19.backend.dto.profile.ProfileDto;
 import com.HUFS19.backend.repository.user.User;
 import com.HUFS19.backend.repository.user.UserRepository;
 import com.HUFS19.backend.repository.user.UserRepositoryImp;
-import com.HUFS19.backend.repository.userInfo.UserInfo;
 import com.HUFS19.backend.repository.userInfo.UserInfoRepository;
 import com.HUFS19.backend.repository.userInfo.UserInfoRepositoryImp;
 import org.junit.jupiter.api.Test;
@@ -35,9 +35,9 @@ class UserInfoRepositoryImpTest {
         newUser.setPassword("testPw");
         String userId = userRepository.save(newUser);
 
-        UserInfo saved = userInfoRepository.findByUserId("testUser").get();
+        ProfileDto saved = userInfoRepository.findByUserId("testUser").get();
 
-        assertEquals(newUser, saved.getUser());
+        assertEquals(newUser.getId(), saved.getUserId());
         assertEquals(newUser.getId(), saved.getNickname());
     }
 }
