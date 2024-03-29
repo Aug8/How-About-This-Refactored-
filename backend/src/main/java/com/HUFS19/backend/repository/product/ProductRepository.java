@@ -1,5 +1,6 @@
 package com.HUFS19.backend.repository.product;
 
+import com.HUFS19.backend.dto.product.ProductDetailDto;
 import com.HUFS19.backend.dto.product.ProductSummary;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ public interface ProductRepository {
 //    List<Product> findByCategory(int categoryId);
     List<Product> findAll(int categoryId);
 
-    Optional<Product> findById(int productId);
+    Optional<ProductDetailDto> findById(int productId);
 
     Optional<Product> findByName(String productName);
 
@@ -25,5 +26,5 @@ public interface ProductRepository {
 
     List<ProductSummary> findCategoryProducts(int categoryId, String sort);
 
-    List<Product> findByUserId(String userId);
+    List<ProductDetailDto> findByUserId(String userId);
 }

@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 @Getter
 @Setter
-public class ProdudctDetailDto {
+public class ProductDetailAndUserMatchDTO {
     private int id;
     private String name;
     private String uploader;

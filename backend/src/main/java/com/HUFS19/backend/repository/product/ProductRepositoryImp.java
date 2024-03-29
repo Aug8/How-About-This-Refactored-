@@ -1,6 +1,8 @@
 package com.HUFS19.backend.repository.product;
 
+import com.HUFS19.backend.dto.product.ProductDetailDto;
 import com.HUFS19.backend.dto.product.ProductSummary;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -33,8 +35,23 @@ public class ProductRepositoryImp implements ProductRepository
     }
 
     @Override
-    public Optional<Product> findById(int productId) {
-        return Optional.ofNullable(em.find(Product.class, productId));
+    public Optional<ProductDetailDto> findById(int productId) {
+        return Optional.ofNullable(
+                query.select(
+                        Projections.bean(
+                                ProductDetailDto.class,
+                                product.id.as("id"),
+                                product.name.as("name"),
+                                product.user.id.as("uploader"),
+                                product.category.name.as("categoryName"),
+                                product.detail.as("detail"),
+                                product.link.as("link"),
+                                product.mainImg.as("mainImg"),
+                                product.date.as("date")
+                        )
+                ).from(product)
+                .where(product.id.eq(productId))
+                .fetchOne());
     }
 
     @Override
@@ -56,8 +73,22 @@ public class ProductRepositoryImp implements ProductRepository
     }
 
     @Override
-    public List<Product> findByUserId(String userId) {
-        return query.selectFrom(product).where(product.user.id.eq(userId)).fetch();
+    public List<ProductDetailDto> findByUserId(String userId) {
+        return query.select(
+                Projections.bean(
+                        ProductDetailDto.class,
+                        product.id.as("id"),
+                        product.name.as("name"),
+                        product.user.id.as("uploader"),
+                        product.category.name.as("categoryName"),
+                        product.detail.as("detail"),
+                        product.link.as("link"),
+                        product.mainImg.as("mainImg"),
+                        product.date.as("date")
+                        )
+                ).from(product)
+                .where(product.user.id.eq(userId))
+                .fetch();
     }
 
     @Override

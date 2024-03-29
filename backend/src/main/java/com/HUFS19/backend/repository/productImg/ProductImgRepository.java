@@ -1,6 +1,6 @@
 package com.HUFS19.backend.repository.productImg;
 
-import com.HUFS19.backend.dto.product.ProductImgDto;
+import com.HUFS19.backend.dto.productImg.ProductImgDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

@@ -1,10 +1,8 @@
 package com.HUFS19.backend.controller;
 
 import com.HUFS19.backend.common.dto.ApiResponseDto;
-import com.HUFS19.backend.common.dto.ErrorResponse;
 import com.HUFS19.backend.common.util.ResponseUtils;
-import com.HUFS19.backend.dto.product.ProductImgDto;
-import com.HUFS19.backend.repository.productImg.ProductImgRepository;
+import com.HUFS19.backend.dto.productImg.ProductImgDto;
 import com.HUFS19.backend.service.ProductImgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

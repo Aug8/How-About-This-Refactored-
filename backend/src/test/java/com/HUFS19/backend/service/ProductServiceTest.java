@@ -35,7 +35,7 @@ class ProductServiceTest {
 
         productService.addProduct(product);
 
-        assertEquals(product, productService.findOne(product.getId()).get());
+        assertEquals(product.getId(), productService.findOne(product.getId()).getId());
     }
 
     @Test

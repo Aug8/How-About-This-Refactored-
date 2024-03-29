@@ -1,9 +1,10 @@
 package com.HUFS19.backend.service;
 
-import com.HUFS19.backend.dto.product.ProductImgDto;
+import com.HUFS19.backend.dto.product.ProductDetailDto;
+import com.HUFS19.backend.error.CustumException;
+import com.HUFS19.backend.error.ErrorCode;
 import com.HUFS19.backend.repository.product.Product;
 import com.HUFS19.backend.repository.product.ProductRepository;
-import com.HUFS19.backend.repository.productImg.ProductImg;
 import com.HUFS19.backend.repository.productImg.ProductImgRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +27,15 @@ public class ProductService {
 
     }
 
-    public Optional<Product> findOne(int productId){
-        return productRepository.findById(productId);
+    public ProductDetailDto findOne(int productId) {
+        return productRepository.findById(productId).orElseThrow(()->new CustumException(ErrorCode.MISSING_PRODUCT));
     }
 
-    public List<Product> findAll(){
+    public List<Product> findAll() {
         return productRepository.findAll(1);
     }
 
-    public List<Product> getUserProducts(String userId) {
+    public List<ProductDetailDto> getUserProducts(String userId) {
         return productRepository.findByUserId(userId);
     }
 
