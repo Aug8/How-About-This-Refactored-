@@ -1,30 +1,27 @@
 package com.HUFS19.backend.service;
 
+import com.HUFS19.backend.common.enums.SearchConstants;
 import com.HUFS19.backend.dto.product.ProductDetailDto;
 import com.HUFS19.backend.error.CustumException;
 import com.HUFS19.backend.error.ErrorCode;
 import com.HUFS19.backend.repository.product.Product;
 import com.HUFS19.backend.repository.product.ProductRepository;
-import com.HUFS19.backend.repository.productImg.ProductImgRepository;
+import com.HUFS19.backend.repository.tag.TagRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
-import java.util.Optional;
 
 @org.springframework.stereotype.Service
+@RequiredArgsConstructor
 @Transactional
 public class ProductService {
     private final ProductRepository productRepository;
-    @Autowired
-    public ProductService(ProductRepository productRepository, ProductImgRepository productImgRepository) {
-        this.productRepository = productRepository;
-    }
+    private final TagRepository tagRepository;
 
     public int addProduct(Product product) {
         productRepository.save(product);
         return product.getId();
-
     }
 
     public ProductDetailDto findOne(int productId) {
@@ -39,7 +36,13 @@ public class ProductService {
         return productRepository.findByUserId(userId);
     }
 
-
+    public List<ProductDetailDto> searchProducts(int categoryId, String searchOption, String keyword){
+        if(searchOption.equals(SearchConstants.SEARCH_TAG.getMessage())){
+            return productRepository.searchProduct(keyword, searchOption, categoryId);
+        }else {
+            return tagRepository.findByPartialTag(keyword, categoryId);
+        }
+    }
 //    public List<ProductSummary> getCategoryProducts(int category, String sort){
 //        if(category==1){
 //            category=null;

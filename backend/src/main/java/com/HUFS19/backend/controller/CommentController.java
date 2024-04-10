@@ -2,12 +2,15 @@ package com.HUFS19.backend.controller;
 
 import com.HUFS19.backend.common.dto.ApiResponseDto;
 import com.HUFS19.backend.common.util.ResponseUtils;
+import com.HUFS19.backend.dto.comment.CommentDto;
 import com.HUFS19.backend.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/commentApi")
@@ -21,7 +24,7 @@ public class CommentController {
     }
 
     @GetMapping("/{productId}")
-    public ApiResponseDto getComment(@PathVariable("productId") int productId){
+    public ApiResponseDto<List<CommentDto>> getComment(@PathVariable("productId") int productId){
         return ResponseUtils.ok(commentService.getCommentOfProduct(productId));
     }
 }

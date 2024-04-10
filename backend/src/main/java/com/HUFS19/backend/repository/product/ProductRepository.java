@@ -16,13 +16,11 @@ public interface ProductRepository {
 
     Optional<ProductDetailDto> findById(int productId);
 
-    Optional<Product> findByName(String productName);
+    List<ProductDetailDto> findByPartialName(String name);
 
-
-    List<Product> findByNameLike(String name);
+    List<ProductDetailDto> searchProduct(String keyword, String searchOption, int categoryId);
 
     List<Product> findByUploaderLike(String uploader);
-    List<Product> findByTagLike(String tag);
 
     List<ProductSummary> findCategoryProducts(int categoryId, String sort);
 
