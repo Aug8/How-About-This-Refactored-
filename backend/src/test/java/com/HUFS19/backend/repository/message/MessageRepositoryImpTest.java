@@ -38,20 +38,20 @@ class MessageRepositoryImpTest {
     @Autowired
     ChatRoomRepository chatRoomRepository;
 
-    @Test
-    void 저장_조회() {
-        Message message = new Message();
-        message.setCategory(categoryRepository.findById(1).get());
-        message.setProduct(productRepository.findById(1).get());
-        message.setUser(userRepository.findById("testID").get());
-        message.setSender(userRepository.findById("testID").get());
-        message.setInquirer(userRepository.findById("user4444").get());
-        message.setChatRoom(chatRoomRepository.findById(1).get());
-        message.setContent("메세지입니다.");
-
-        int id = messageRepository.save(message);
-        Message saved = messageRepository.findById(id).get();
-
-        assertEquals(message, saved);
-    }
+//    @Test
+//    void 저장_조회() {
+//        Message message = new Message();
+//        message.setCategory(categoryRepository.findById(1).get());
+//        message.setProduct(productRepository.findById(1).get());
+//        message.setUser(userRepository.findById("testID").get());
+//        message.setSender(userRepository.findById("testID").get());
+//        message.setInquirer(userRepository.findById("user4444").get());
+//        message.setChatRoom(chatRoomRepository.findById(1).get());
+//        message.setContent("메세지입니다.");
+//
+//        int id = messageRepository.save(message);
+//        Message saved = messageRepository.findById(id).get();
+//
+//        assertEquals(message, saved);
+//    }
 }

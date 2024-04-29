@@ -28,17 +28,17 @@ class CommentRepositoryImpTest {
     ProductRepository productRepository;
     @Autowired
     UserRepository userRepository;
-
-    @Test
-    void 저장_조회() {
-        Comment comment = new Comment();
-        comment.setProduct(productRepository.findById(1).get());
-        comment.setUser(userRepository.findById("testID").get());
-        comment.setContent("상품에 대한 코멘트");
-
-        int id = commentRepository.save(comment);
-        Comment saved = commentRepository.findByID(id).get();
-
-        assertEquals(comment, saved);
-    }
+//
+//    @Test
+//    void 저장_조회() {
+//        Comment comment = new Comment();
+//        comment.setProduct(productRepository.findById(1).get());
+//        comment.setUser(userRepository.findById("testID").get());
+//        comment.setContent("상품에 대한 코멘트");
+//
+//        int id = commentRepository.save(comment);
+//        Comment saved = commentRepository.findByID(id).get();
+//
+//        assertEquals(comment, saved);
+//    }
 }

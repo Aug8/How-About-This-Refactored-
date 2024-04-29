@@ -1,13 +1,12 @@
 package com.HUFS19.backend.dto.product;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
+import lombok.*;
 import java.sql.Timestamp;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class ProductDetailDto {
     private int id;

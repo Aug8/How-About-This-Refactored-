@@ -21,6 +21,12 @@ public class UserLikeRepositoryImp implements UserLikeRepository{
     }
 
     @Override
+    public UserLike save(UserLike userLike) {
+        em.persist(userLike);
+        return userLike;
+    }
+
+    @Override
     public List<ProductDetailDto> getLikedProduct(String userId) {
         return query.select(
                 Projections.bean(

@@ -8,6 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface UserLikeRepository {
+
+    UserLike save(UserLike userLike);
     List<ProductDetailDto> getLikedProduct(String userId);
 
     Optional<UserLike> getProductLikeStatus(int productId, String userId);

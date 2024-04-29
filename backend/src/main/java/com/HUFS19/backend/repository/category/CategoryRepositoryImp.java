@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class CategoryRepositoryImp implements CategoryRepository {
-    private EntityManager em;
-    private JPAQueryFactory query;
+    private final EntityManager em;
+    private final JPAQueryFactory query;
+
     public CategoryRepositoryImp(EntityManager em){
         this.em=em;
         this.query = new JPAQueryFactory(em);

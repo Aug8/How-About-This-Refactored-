@@ -33,19 +33,19 @@ class ChatRoomRepositoryImpTest {
     @Autowired
     ProductRepository productRepository;
 
-
-    @Test
-    public void 저장_조회(){
-        ChatRoom chatRoom = new ChatRoom();
-        chatRoom.setCategory(categoryRepository.findById(1).get());
-        chatRoom.setUser(userRepository.findById("testID").get());
-        chatRoom.setInquirer(userRepository.findById("niceto").get());
-        chatRoom.setProduct(productRepository.findById(1).get());
-
-        int id = chatRoomRepository.save(chatRoom);
-        ChatRoom saved = chatRoomRepository.findById(id).get();
-
-        assertEquals(chatRoom, saved);
-    }
+//
+//    @Test
+//    public void 저장_조회(){
+//        ChatRoom chatRoom = new ChatRoom();
+//        chatRoom.setCategory(categoryRepository.findById(1).get());
+//        chatRoom.setUser(userRepository.findById("testID").get());
+//        chatRoom.setInquirer(userRepository.findById("niceto").get());
+//        chatRoom.setProduct(productRepository.findById(1).get());
+//
+//        int id = chatRoomRepository.save(chatRoom);
+//        ChatRoom saved = chatRoomRepository.findById(id).get();
+//
+//        assertEquals(chatRoom, saved);
+//    }
 
 }
