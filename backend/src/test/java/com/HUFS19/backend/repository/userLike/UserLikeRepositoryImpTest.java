@@ -46,13 +46,12 @@ class UserLikeRepositoryImpTest {
     }
     Product createProduct(){
         plusNum();
-        Product product = Product.builder().user(createUserObj()).link(String.format("test%d", num))
+        return Product.builder().user(createUserObj()).link(String.format("test%d", num))
                 .detail(String.format("test%d", num))
                 .mainImg(String.format("test%d", num))
                 .category(createCategory())
                 .name(String.format("test%d", num))
                 .build();
-        return product;
     }
 
     @Test
