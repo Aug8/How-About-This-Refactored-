@@ -1,6 +1,6 @@
 package com.HUFS19.backend.service;
 
-import com.HUFS19.backend.dto.product.ProductImgDto;
+import com.HUFS19.backend.dto.productImg.ProductImgDto;
 import com.HUFS19.backend.repository.productImg.ProductImgRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,17 +1,20 @@
 package com.HUFS19.backend.dto.product;
 
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.*;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
-public class ProductSearchResponse {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ProductDetailDto {
     private int id;
     private String name;
     private String uploader;
     private String categoryName;
     private String detail;
     private String link;
-    private String MainImg;
-    private String date;
+    private String mainImg;
+    private Timestamp date;
 }

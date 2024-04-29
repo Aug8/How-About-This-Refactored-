@@ -34,10 +34,11 @@ public class UserService {
         if (checkIdDuplication(id)){
             throw new CustumException(ErrorCode.USER_ID_CONFLICT);
         }
+//
+//        User newUser = new User(id, bCryptPasswordEncoder.encode(pw));
+////        User.builder().id(id).password(bCryptPasswordEncoder.encode(pw)).build();
+//        userRepository.save(newUser);
 
-        User newUser = new User(id, bCryptPasswordEncoder.encode(pw), "tempSalt");
-        userRepository.save(newUser);
-
-        return true;
+        return false;
     }
 }

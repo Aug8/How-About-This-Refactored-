@@ -6,27 +6,25 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @Import(CategoryRepositoryImp.class)
-//@AutoConfigureTestDatabase
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@TestPropertySource(locations = "classpath:application.properties")
 
 class CategoryRepositoryImpTest {
-    @Autowired
-    TestEntityManager testEM;
 
     @Autowired
     private CategoryRepository categoryRepository;
 
     @Test
     void save_findById_test() {
-        Category category = new Category("캠핑");
+        Category category = Category.builder().name("testCategory").build();
 
         int categoryId = categoryRepository.save(category);
-        Category foundCategory = categoryRepository.findById(categoryId).get();
+        Category foundCategory = categoryRepository.findById(categoryId).orElseThrow(RuntimeException::new);
 
         assertEquals(foundCategory.getName(), category.getName());
     }

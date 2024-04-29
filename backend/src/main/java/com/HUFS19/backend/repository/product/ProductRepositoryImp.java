@@ -1,7 +1,10 @@
 package com.HUFS19.backend.repository.product;
 
+import com.HUFS19.backend.common.enums.SearchConstants;
+import com.HUFS19.backend.dto.product.ProductDetailDto;
 import com.HUFS19.backend.dto.product.ProductSummary;
-import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 
@@ -11,9 +14,9 @@ import java.util.Optional;
 public class ProductRepositoryImp implements ProductRepository
 {
     private final EntityManager em;
-    private JPAQueryFactory query;
+    private final JPAQueryFactory query;
 
-    private QProduct product = QProduct.product;
+    private final QProduct product = QProduct.product;
 
 
     public ProductRepositoryImp(EntityManager em){
@@ -33,31 +36,78 @@ public class ProductRepositoryImp implements ProductRepository
     }
 
     @Override
-    public Optional<Product> findById(int productId) {
-        return Optional.ofNullable(em.find(Product.class, productId));
+    public Optional<ProductDetailDto> findById(int productId) {
+        return Optional.ofNullable(
+                query.select(
+                        Projections.bean(
+                                ProductDetailDto.class,
+                                product.id.as("id"),
+                                product.name.as("name"),
+                                product.user.id.as("uploader"),
+                                product.category.name.as("categoryName"),
+                                product.detail.as("detail"),
+                                product.link.as("link"),
+                                product.mainImg.as("mainImg"),
+                                product.date.as("date")
+                        )
+                ).from(product)
+                .where(product.id.eq(productId))
+                .fetchOne());
     }
 
     @Override
-    public Optional<Product> findByName(String productName) {
-        return Optional.ofNullable(query.selectFrom(product).where(product.name.eq(productName)).fetchOne());
-//        List<Product> result = em.createQuery("select p from Product p where p.name=:productName", Product.class)
-//                .setParameter("productName", productName)
-//                .getResultList();
-//        return result.stream().findAny();
-
+    public List<ProductDetailDto> findByPartialName(String name) {
+        return query.select(
+                Projections.bean(
+                        ProductDetailDto.class,
+                        product.id.as("id"),
+                        product.name.as("name"),
+                        product.user.id.as("uploader"),
+                        product.category.name.as("categoryName"),
+                        product.detail.as("detail"),
+                        product.link.as("link"),
+                        product.mainImg.as("mainImg"),
+                        product.date.as("date")
+                )
+        ).from(product).where(product.name.like(name)).fetch();
     }
 
     @Override
-    public List<Product> findByNameLike(String name) {
-        return query.selectFrom(product).where(product.name.like(name)).fetch();
-//        return em.createQuery("select P from Product p where p.name like :name", Product.class)
-//                .setParameter("name", name)
-//                .getResultList();
+        public List<ProductDetailDto> findByUserId(String userId) {
+            return query.select(
+                Projections.bean(
+                        ProductDetailDto.class,
+                        product.id.as("id"),
+                        product.name.as("name"),
+                        product.user.id.as("uploader"),
+                        product.category.name.as("categoryName"),
+                        product.detail.as("detail"),
+                        product.link.as("link"),
+                        product.mainImg.as("mainImg"),
+                        product.date.as("date")
+                        )
+                ).from(product)
+                .where(product.user.id.eq(userId))
+                .fetch();
     }
 
     @Override
-    public List<Product> findByUserId(String userId) {
-        return query.selectFrom(product).where(product.user.id.eq(userId)).fetch();
+    public List<ProductDetailDto> searchProduct(String keyword, String searchOption, int categoryId) {
+        return query.select(
+                        Projections.bean(
+                                ProductDetailDto.class,
+                                product.id.as("id"),
+                                product.name.as("name"),
+                                product.user.id.as("uploader"),
+                                product.category.name.as("categoryName"),
+                                product.detail.as("detail"),
+                                product.link.as("link"),
+                                product.mainImg.as("mainImg"),
+                                product.date.as("date")
+                        )
+                ).from(product)
+                .where(selectOption(searchOption, keyword), selectCategory(categoryId))
+                .fetch();
     }
 
     @Override
@@ -66,12 +116,21 @@ public class ProductRepositoryImp implements ProductRepository
     }
 
     @Override
-    public List<Product> findByTagLike(String tag) {
-        return null;
-    }
-
-    @Override
     public List<ProductSummary> findCategoryProducts(int categoryId, String sort) {
     return null;
+    }
+
+    private BooleanExpression selectCategory(int categoryId){
+        return categoryId!=0?product.category.id.eq(categoryId):null;
+    }
+
+    private BooleanExpression selectOption(String option, String keyword){
+        if (option.equals(SearchConstants.SEARCH_PRODUCT.getMessage())){
+            return product.name.like(keyword);
+        } else if (option.equals(SearchConstants.SEARCH_UPLOADER.getMessage())) {
+            return product.user.id.like(keyword);
+        } else{
+            return null;
+        }
     }
 }

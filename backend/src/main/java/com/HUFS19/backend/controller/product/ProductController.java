@@ -1,47 +1,37 @@
-package com.HUFS19.backend.controller;
+package com.HUFS19.backend.controller.product;
 
 import com.HUFS19.backend.common.dto.ApiResponseDto;
-import com.HUFS19.backend.common.dto.ErrorResponse;
 import com.HUFS19.backend.common.util.ResponseUtils;
-import com.HUFS19.backend.dto.product.CategoryproductsResponse;
-import com.HUFS19.backend.dto.product.ProductImgDto;
+import com.HUFS19.backend.dto.product.ProductDetailDto;
 import com.HUFS19.backend.repository.product.Product;
 import com.HUFS19.backend.service.ProductService;
 import com.HUFS19.backend.service.TagService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@org.springframework.stereotype.Controller
+@RestController
+@RequiredArgsConstructor
 @RequestMapping("/productAPI")
 public class ProductController {
     private final ProductService productService;
-    @Autowired
-    public ProductController(ProductService productService, TagService tagService){
-        this.productService=productService;
-    }
 
-    @GetMapping("/product/{id}")
-    @ResponseBody
-    public Product getProductById(@PathVariable("id") int productId){
-        Optional<Product> result = productService.findOne(productId);
-        if (result.isEmpty()){
-            throw new IllegalStateException("error");
-        }
-        return result.get();
+    @GetMapping("/{id}")
+    public ApiResponseDto<ProductDetailDto> getProductById(@PathVariable("id") int productId){
+        return ResponseUtils.ok(productService.findOne(productId));
     }
 
     @GetMapping("/user/{userId}")
-    @ResponseBody
-    ApiResponseDto getUserProducts(@PathVariable("userId") String userId){
+    public ApiResponseDto<List<ProductDetailDto>> getUserProducts(@PathVariable("userId") String userId){
         return ResponseUtils.ok(productService.getUserProducts(userId));
     }
 
     @GetMapping("/like")
-    @ResponseBody
-    ApiResponseDto addLike() {
+    public ApiResponseDto addLike() {
         return ResponseUtils.ok("토큰 검증됨");
     }
 
@@ -52,7 +42,13 @@ public class ProductController {
 //        categoryproductsResponse.setProductSummaries(productService.getCategoryProducts(category, sort));
 //        return categoryproductsResponse;
 //    }
-
+    @GetMapping("/search")
+    public ApiResponseDto<List<ProductDetailDto>> searchProducts(
+            @RequestParam(name="categoryId")int categoryId,
+            @RequestParam(name="type")String searchOption,
+            @RequestParam(name="search")String keyword ){
+        return ResponseUtils.ok(productService.searchProducts(categoryId, searchOption, keyword));
+    }
 
 
 

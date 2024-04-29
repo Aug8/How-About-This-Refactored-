@@ -1,13 +1,9 @@
 package com.HUFS19.backend.repository.chatRoom;
 
 import com.HUFS19.backend.dto.chatRoom.ChatRoomDetail;
-import com.HUFS19.backend.dto.product.ProductImgDto;
-import com.HUFS19.backend.repository.productImg.QProductImg;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.ast.Projection;
 
 import java.util.List;
 import java.util.Optional;

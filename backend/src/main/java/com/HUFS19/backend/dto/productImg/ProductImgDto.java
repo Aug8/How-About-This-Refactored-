@@ -1,4 +1,4 @@
-package com.HUFS19.backend.dto.product;
+package com.HUFS19.backend.dto.productImg;
 
 import lombok.Getter;
 import lombok.Setter;
