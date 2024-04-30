@@ -1,24 +1,23 @@
 package com.HUFS19.backend.repository.category;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Table(name = "category")
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int categoryId;
-    private String categoryName;
+    @Column(name="category_id")
+    private int id;
 
-    public Category (String categoryName){
-        this.categoryName=categoryName;
+    @Column(name="category_name")
+    private String name;
+
+    @Builder
+    public Category (String name){
+        this.name =name;
     }
 }

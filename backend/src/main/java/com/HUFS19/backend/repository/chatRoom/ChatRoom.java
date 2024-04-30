@@ -16,18 +16,18 @@ public class ChatRoom {
     @Column(name = "chat_room_id")
     private int id;
     @ManyToOne
-    @JoinColumn(name="productId")
+    @JoinColumn(name="product_id")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name="userId")
+    @JoinColumn(name="user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="categoryId")
+    @JoinColumn(name="category_id")
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name="inquirerId")
+    @JoinColumn(name="inquirer_id")
     private User inquirer;
 }

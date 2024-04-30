@@ -1,5 +1,8 @@
 package com.HUFS19.backend.repository.productImg;
 
+import com.HUFS19.backend.dto.productImg.ProductImgDto;
+import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -7,9 +10,13 @@ import java.util.Optional;
 
 public class ProductImgRepositoryImp implements ProductImgRepository{
     private EntityManager em;
+    private JPAQueryFactory query;
+    private QProductImg productImg = QProductImg.productImg;
 
     public ProductImgRepositoryImp(EntityManager em){
         this.em=em;
+        query = new JPAQueryFactory(em);
+
     }
 
     @Override
@@ -24,10 +31,19 @@ public class ProductImgRepositoryImp implements ProductImgRepository{
     }
 
     @Override
-    public Optional<ProductImg> findByProductId(int productId) {
-        List<ProductImg> result = em.createQuery("select pimg from ProductImg pimg where pimg.product.id=:productId", ProductImg.class)
-                .setParameter("productId", productId)
-                .getResultList();
-        return result.stream().findAny();
+    public List<ProductImgDto> findByProductId(int productId) {
+
+        return query.select(
+                Projections.bean(
+                        ProductImgDto.class,
+                        productImg.id,
+                        productImg.product.id.as("productId"),
+                        productImg.order,
+                        productImg.img
+                ))
+                .from(productImg)
+                .where(productImg.product.id.eq(productId))
+                .fetch();
+
     }
 }

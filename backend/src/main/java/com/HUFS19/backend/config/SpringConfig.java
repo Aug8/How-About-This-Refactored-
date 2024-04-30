@@ -1,4 +1,4 @@
-package com.HUFS19.backend;
+package com.HUFS19.backend.config;
 
 import com.HUFS19.backend.repository.category.CategoryRepository;
 import com.HUFS19.backend.repository.category.CategoryRepositoryImp;
@@ -25,6 +25,7 @@ import com.HUFS19.backend.repository.userLike.UserLikeRepository;
 import com.HUFS19.backend.repository.userLike.UserLikeRepositoryImp;
 import com.HUFS19.backend.repository.userSns.UserSnsRepository;
 import com.HUFS19.backend.repository.userSns.UserSnsRepositoryImp;
+import com.HUFS19.backend.service.TagService;
 import com.HUFS19.backend.service.UserService;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +40,15 @@ public class SpringConfig {
     public SpringConfig(EntityManager em){
         this.em=em;
     }
-
-    @Bean
-    public ProductService service(){
-        return new ProductService(productRepository());
-    }
-    @Bean
-    public UserService userService(){return new UserService(userRepository());}
+//
+//    @Bean
+//    public ProductService service(){
+//        return new ProductService(productRepository(), productImgRepository());
+//    }
+//    @Bean
+//    public UserService userService(){return new UserService(userRepository());}
+//    @Bean
+//    public TagService tagService(){return new TagService(tagRepository());}
    //Repository
     @Bean
     public CategoryRepository categoryRepository(){return new CategoryRepositoryImp(em);

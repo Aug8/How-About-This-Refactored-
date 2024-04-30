@@ -308,5 +308,10 @@ INSERT INTO comment(user_id, product_id, content) values
                                                       ('lucky777', '1', '더쓸말도없다.... 위에 사람들 다 거짓말임 전 별로였어요');
 
 INSERT INTO chat_room(category_id, user_id, inquirer_id, product_id) values
-                                                      ('1', 'testID', 'user4444', '1')
+                                                      ('1', 'testID', 'user4444', '1');
+INSERT INTO message(chat_room_id, product_id, user_id, category_id, inquirer_id, sender_id, content) values
+                                                    ('1', '1', 'testID', '7', 'user4444', 'user4444', '안녕하세요!'),
+                                                    ('1', '1', 'testID', '7', 'user4444', 'testID', '네 안녕하세요!'),
+                                                    ('1', '1', 'testID', '7', 'user4444', 'user4444', '언제 구매하셨나요?'),
+                                                    ('1', '1', 'testID', '7', 'user4444', 'testID', '3개월 전입니다!');
 
