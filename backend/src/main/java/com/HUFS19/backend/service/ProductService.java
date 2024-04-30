@@ -40,11 +40,9 @@ public class ProductService {
     public List<ProductPrevDto> searchProducts(int categoryId, String searchOption, String keyword){
             return productRepository.searchProduct(keyword, searchOption, categoryId);
     }
-//    public List<ProductSummary> getCategoryProducts(int category, String sort){
-//        if(category==1){
-//            category=null;
-//        }
-//    }
+    public List<ProductPrevDto> getCategoryProducts(int categoryId){
+        return productRepository.findCategoryProducts(categoryId);
+    }
 
 
 

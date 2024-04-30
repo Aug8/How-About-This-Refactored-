@@ -36,18 +36,26 @@ public class ProductController {
         return ResponseUtils.ok(productService.getUserProducts(userId));
     }
 
-    @GetMapping("/like")
-    public ApiResponseDto addLike() {
-        return ResponseUtils.ok("토큰 검증됨");
+//    like controller로 이동
+//    @GetMapping("/like")
+//    public ApiResponseDto addLike() {
+//        return ResponseUtils.ok("토큰 검증됨");
+//    }
+
+    @GetMapping("/category")
+    public ApiResponseDto<List<ProductPrevDto>> getCategoryProducts(@RequestParam int categoryId){
+        List<ProductPrevDto> productPrevDtos=productService.getCategoryProducts(categoryId);
+        productPrevDtos.forEach(v->v.setLike(likeService.getLikeAmount(v.getId())));
+        if (AuthCheckUtils.getLoginStatus()){
+            productPrevDtos.forEach(v->v.setLikeStatus(
+                    likeService.checkProductLikeStatus(
+                            v.getId(), AuthCheckUtils.getLoginUserId()
+                    )
+            ));
+        }
+        return ResponseUtils.ok(productPrevDtos);
     }
 
-//    @GetMapping("/productAPI/list")
-//    @ResponseBody
-//    public CategoryproductsResponse getCategoryProducts(@RequestParam int category, @RequestParam String sort){
-//        CategoryproductsResponse categoryproductsResponse = new CategoryproductsResponse();
-//        categoryproductsResponse.setProductSummaries(productService.getCategoryProducts(category, sort));
-//        return categoryproductsResponse;
-//    }
     @GetMapping("/search")
     public ApiResponseDto<List<ProductPrevDto>> searchProducts(
             @RequestParam(name="categoryId")int categoryId,

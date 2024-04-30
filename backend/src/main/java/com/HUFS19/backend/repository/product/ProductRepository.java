@@ -17,13 +17,9 @@ public interface ProductRepository {
 
     Optional<ProductDetailDto> findById(int productId);
 
-    List<ProductDetailDto> findByPartialName(String name);
-
     List<ProductPrevDto> searchProduct(String keyword, String searchOption, int categoryId);
 
-    List<Product> findByUploaderLike(String uploader);
-
-    List<ProductSummary> findCategoryProducts(int categoryId, String sort);
-
     List<ProductDetailDto> findByUserId(String userId);
+
+    List<ProductPrevDto> findCategoryProducts(int categoryId);
 }

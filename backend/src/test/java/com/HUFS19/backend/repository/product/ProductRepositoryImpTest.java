@@ -12,6 +12,7 @@ import com.HUFS19.backend.repository.product.ProductRepositoryImp;
 import com.HUFS19.backend.repository.user.User;
 import com.HUFS19.backend.repository.user.UserRepository;
 import com.HUFS19.backend.repository.user.UserRepositoryImp;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,13 @@ class ProductRepositoryImpTest {
                 .build();
     }
 
+    @BeforeEach
+    void saveProducts(){
+        productRepository.save(createProduct());
+        productRepository.save(createProduct());
+        productRepository.save(createProduct());
+    }
+
     //id, date 확인 필요
     @Test
     public void 상품_저장_확인(){
@@ -88,12 +96,6 @@ class ProductRepositoryImpTest {
     @DisplayName("상품 검색-업로더 옵션")
     void searchProduct(){
 //        given
-        Product product1 = createProduct();
-        Product product2 = createProduct();
-        Product product3 = createProduct();
-        productRepository.save(product1);
-        productRepository.save(product2);
-        productRepository.save(product3);
 //        when
         List<ProductPrevDto> prevDtoList = productRepository.searchProduct(
                 "user",
@@ -114,12 +116,6 @@ class ProductRepositoryImpTest {
     @DisplayName("상품 검색-상품 옵션")
     void searchProductOption(){
 //        given
-        Product product1 = createProduct();
-        Product product2 = createProduct();
-        Product product3 = createProduct();
-        productRepository.save(product1);
-        productRepository.save(product2);
-        productRepository.save(product3);
 //        when
         List<ProductPrevDto> prevDtoList = productRepository.searchProduct(
                 "te",
@@ -139,5 +135,18 @@ class ProductRepositoryImpTest {
         assertEquals(prevDtoList.size(), 3);
         assertEquals(prevDtoList2.size(), 1);
         assertEquals(prevDtoList3.size(), 1);
+    }
+
+    @Test
+    @DisplayName("카테고리 상품 조회")
+    void getCategoryProducts(){
+//        given
+//        when
+        List<ProductPrevDto> prevDtos1 = productRepository.findCategoryProducts(0);
+        List<ProductPrevDto> prevDtos2 = productRepository.findCategoryProducts(1);
+
+//        then
+        assertEquals(prevDtos1.size(), 3);
+        assertEquals(prevDtos2.size(), 1);
     }
 }
