@@ -1,6 +1,7 @@
 package com.HUFS19.backend.repository.product;
 
 import com.HUFS19.backend.dto.product.ProductDetailDto;
+import com.HUFS19.backend.dto.product.ProductPrevDto;
 import com.HUFS19.backend.dto.product.ProductSummary;
 import org.springframework.stereotype.Repository;
 
@@ -16,13 +17,9 @@ public interface ProductRepository {
 
     Optional<ProductDetailDto> findById(int productId);
 
-    List<ProductDetailDto> findByPartialName(String name);
-
-    List<ProductDetailDto> searchProduct(String keyword, String searchOption, int categoryId);
-
-    List<Product> findByUploaderLike(String uploader);
-
-    List<ProductSummary> findCategoryProducts(int categoryId, String sort);
+    List<ProductPrevDto> searchProduct(String keyword, String searchOption, int categoryId);
 
     List<ProductDetailDto> findByUserId(String userId);
+
+    List<ProductPrevDto> findCategoryProducts(int categoryId);
 }

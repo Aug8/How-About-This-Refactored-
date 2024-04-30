@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import org.apache.commons.lang3.time.DateUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class UserLikeRepositoryImp implements UserLikeRepository{
@@ -49,5 +50,10 @@ public class UserLikeRepositoryImp implements UserLikeRepository{
         return Optional.ofNullable(
                 query.selectFrom(userLike).where(userLike.product.id.eq(productId).and(userLike.user.id.eq(userId))).fetchOne()
         );
+    }
+
+    @Override
+    public int getLikeAmount(int productId) {
+        return Math.toIntExact(Objects.requireNonNull(query.select(userLike.count()).from(userLike).where(userLike.product.id.eq(productId)).fetchOne()).intValue());
     }
 }

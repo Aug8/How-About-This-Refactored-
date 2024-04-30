@@ -2,7 +2,7 @@ package com.HUFS19.backend.repository.product;
 
 import com.HUFS19.backend.common.enums.SearchConstants;
 import com.HUFS19.backend.dto.product.ProductDetailDto;
-import com.HUFS19.backend.dto.product.ProductSummary;
+import com.HUFS19.backend.dto.product.ProductPrevDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -56,23 +56,6 @@ public class ProductRepositoryImp implements ProductRepository
     }
 
     @Override
-    public List<ProductDetailDto> findByPartialName(String name) {
-        return query.select(
-                Projections.bean(
-                        ProductDetailDto.class,
-                        product.id.as("id"),
-                        product.name.as("name"),
-                        product.user.id.as("uploader"),
-                        product.category.name.as("categoryName"),
-                        product.detail.as("detail"),
-                        product.link.as("link"),
-                        product.mainImg.as("mainImg"),
-                        product.date.as("date")
-                )
-        ).from(product).where(product.name.like(name)).fetch();
-    }
-
-    @Override
         public List<ProductDetailDto> findByUserId(String userId) {
             return query.select(
                 Projections.bean(
@@ -92,16 +75,16 @@ public class ProductRepositoryImp implements ProductRepository
     }
 
     @Override
-    public List<ProductDetailDto> searchProduct(String keyword, String searchOption, int categoryId) {
+    public List<ProductPrevDto> searchProduct(String keyword, String searchOption, int categoryId) {
         return query.select(
                         Projections.bean(
-                                ProductDetailDto.class,
+                                ProductPrevDto.class,
                                 product.id.as("id"),
                                 product.name.as("name"),
                                 product.user.id.as("uploader"),
                                 product.category.name.as("categoryName"),
-                                product.detail.as("detail"),
-                                product.link.as("link"),
+//                                product.detail.as("detail"),
+//                                product.link.as("link"),
                                 product.mainImg.as("mainImg"),
                                 product.date.as("date")
                         )
@@ -109,15 +92,24 @@ public class ProductRepositoryImp implements ProductRepository
                 .where(selectOption(searchOption, keyword), selectCategory(categoryId))
                 .fetch();
     }
-
     @Override
-    public List<Product> findByUploaderLike(String uploader) {
-        return null;
-    }
+    public List<ProductPrevDto> findCategoryProducts(int categoryId) {
 
-    @Override
-    public List<ProductSummary> findCategoryProducts(int categoryId, String sort) {
-    return null;
+        return query.select(
+                        Projections.bean(
+                                ProductPrevDto.class,
+                                product.id.as("id"),
+                                product.name.as("name"),
+                                product.user.id.as("uploader"),
+                                product.category.name.as("categoryName"),
+//                                product.detail.as("detail"),
+//                                product.link.as("link"),
+                                product.mainImg.as("mainImg"),
+                                product.date.as("date")
+                        )
+                ).from(product)
+                .where(selectCategory(categoryId))
+                .fetch();
     }
 
     private BooleanExpression selectCategory(int categoryId){
@@ -126,9 +118,9 @@ public class ProductRepositoryImp implements ProductRepository
 
     private BooleanExpression selectOption(String option, String keyword){
         if (option.equals(SearchConstants.SEARCH_PRODUCT.getMessage())){
-            return product.name.like(keyword);
+            return product.name.toUpperCase().contains(keyword.toUpperCase());
         } else if (option.equals(SearchConstants.SEARCH_UPLOADER.getMessage())) {
-            return product.user.id.like(keyword);
+            return product.user.id.toUpperCase().contains(keyword.toUpperCase());
         } else{
             return null;
         }

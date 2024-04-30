@@ -22,4 +22,8 @@ public class LikeService {
     public boolean checkProductLikeStatus(int productId, String loginUserId){
         return userLikeRepository.getProductLikeStatus(productId, loginUserId).isPresent();
     }
+
+    public int getLikeAmount(int productId){
+        return userLikeRepository.getLikeAmount(productId);
+    }
 }

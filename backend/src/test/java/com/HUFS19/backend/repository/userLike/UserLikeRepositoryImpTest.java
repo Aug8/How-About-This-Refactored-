@@ -77,7 +77,7 @@ class UserLikeRepositoryImpTest {
     }
 
     @Test
-    @DisplayName("특정 유저, 상품의 좋아요 유무 확인")
+    @DisplayName("특정 유저-상품의 좋아요 유무 확인")
     void getProductLikeStatus() {
 //        given
         User user = createUserObj();
@@ -94,5 +94,25 @@ class UserLikeRepositoryImpTest {
 //        then
         assertTrue(foundUserLike.isPresent());
         assertTrue(nullUserLike.isEmpty());
+    }
+
+    @Test
+    @DisplayName("상품의 좋아요 수 확인")
+    void getLikeAmount(){
+//        given
+        User user = createUserObj();
+        Product likeProduct = createProduct();
+        Product nonLikeProduct = createProduct();
+        UserLike userLike = createUserLikeObj(user, likeProduct);
+
+        userLikeRepository.save(userLike);
+
+//        when
+        int likeZero = userLikeRepository.getLikeAmount(nonLikeProduct.getId());
+        int likeOne =userLikeRepository.getLikeAmount(likeProduct.getId());
+
+//        then
+        assertEquals(0, likeZero);
+        assertEquals(1, likeOne);
     }
 }

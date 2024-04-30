@@ -1,6 +1,7 @@
 package com.HUFS19.backend.repository.tag;
 
 import com.HUFS19.backend.dto.product.ProductDetailDto;
+import com.HUFS19.backend.dto.product.ProductPrevDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface TagRepository {
 
     List<String> findByProductId(int productId);
 
-    List<ProductDetailDto> findByPartialTag(String keyword, int categoryId);
+    List<ProductPrevDto> findByPartialTag(String keyword, int categoryId);
 }

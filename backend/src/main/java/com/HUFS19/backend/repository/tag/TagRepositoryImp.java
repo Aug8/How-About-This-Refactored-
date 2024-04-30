@@ -1,6 +1,7 @@
 package com.HUFS19.backend.repository.tag;
 
 import com.HUFS19.backend.dto.product.ProductDetailDto;
+import com.HUFS19.backend.dto.product.ProductPrevDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -37,20 +38,20 @@ public class TagRepositoryImp implements TagRepository{
     }
 
     @Override
-    public List<ProductDetailDto> findByPartialTag(String keyword, int categoryId) {
+    public List<ProductPrevDto> findByPartialTag(String keyword, int categoryId) {
         return query.select(
                 Projections.bean(
-                        ProductDetailDto.class,
+                        ProductPrevDto.class,
                         tag.product.id.as("id"),
                         tag.product.name.as("name"),
                         tag.product.user.id.as("uploader"),
                         tag.product.category.name.as("categoryName"),
-                        tag.product.detail.as("detail"),
-                        tag.product.link.as("link"),
+//                        tag.product.detail.as("detail"),
+//                        tag.product.link.as("link"),
                         tag.product.mainImg.as("mainImg"),
                         tag.product.date.as("date")
                 )
-        ).from(tag).where(tag.name.like(keyword), selectCategory(categoryId))
+        ).from(tag).where(tag.name.toUpperCase().contains(keyword.toUpperCase()), selectCategory(categoryId))
                 .fetch();
     }
 
