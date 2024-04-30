@@ -2,6 +2,7 @@ package com.HUFS19.backend.repository.product;
 
 import com.HUFS19.backend.common.enums.SearchConstants;
 import com.HUFS19.backend.dto.product.ProductDetailDto;
+import com.HUFS19.backend.dto.product.ProductPrevDto;
 import com.HUFS19.backend.dto.product.ProductSummary;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -92,16 +93,16 @@ public class ProductRepositoryImp implements ProductRepository
     }
 
     @Override
-    public List<ProductDetailDto> searchProduct(String keyword, String searchOption, int categoryId) {
+    public List<ProductPrevDto> searchProduct(String keyword, String searchOption, int categoryId) {
         return query.select(
                         Projections.bean(
-                                ProductDetailDto.class,
+                                ProductPrevDto.class,
                                 product.id.as("id"),
                                 product.name.as("name"),
                                 product.user.id.as("uploader"),
                                 product.category.name.as("categoryName"),
-                                product.detail.as("detail"),
-                                product.link.as("link"),
+//                                product.detail.as("detail"),
+//                                product.link.as("link"),
                                 product.mainImg.as("mainImg"),
                                 product.date.as("date")
                         )
@@ -126,9 +127,9 @@ public class ProductRepositoryImp implements ProductRepository
 
     private BooleanExpression selectOption(String option, String keyword){
         if (option.equals(SearchConstants.SEARCH_PRODUCT.getMessage())){
-            return product.name.like(keyword);
+            return product.name.toUpperCase().contains(keyword.toUpperCase());
         } else if (option.equals(SearchConstants.SEARCH_UPLOADER.getMessage())) {
-            return product.user.id.like(keyword);
+            return product.user.id.toUpperCase().contains(keyword.toUpperCase());
         } else{
             return null;
         }

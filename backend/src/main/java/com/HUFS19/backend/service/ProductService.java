@@ -2,6 +2,7 @@ package com.HUFS19.backend.service;
 
 import com.HUFS19.backend.common.enums.SearchConstants;
 import com.HUFS19.backend.dto.product.ProductDetailDto;
+import com.HUFS19.backend.dto.product.ProductPrevDto;
 import com.HUFS19.backend.error.CustumException;
 import com.HUFS19.backend.error.ErrorCode;
 import com.HUFS19.backend.repository.product.Product;
@@ -36,12 +37,8 @@ public class ProductService {
         return productRepository.findByUserId(userId);
     }
 
-    public List<ProductDetailDto> searchProducts(int categoryId, String searchOption, String keyword){
-        if(searchOption.equals(SearchConstants.SEARCH_TAG.getMessage())){
+    public List<ProductPrevDto> searchProducts(int categoryId, String searchOption, String keyword){
             return productRepository.searchProduct(keyword, searchOption, categoryId);
-        }else {
-            return tagRepository.findByPartialTag(keyword, categoryId);
-        }
     }
 //    public List<ProductSummary> getCategoryProducts(int category, String sort){
 //        if(category==1){
