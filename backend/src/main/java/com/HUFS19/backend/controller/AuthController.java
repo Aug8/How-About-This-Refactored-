@@ -35,7 +35,7 @@ public class AuthController {
     }
 
     @GetMapping("/checkLogin/{userId}")
-    public ApiResponseDto<LoginStatusDto> getLoginStatus(@PathVariable("userId") String userId, Principal principal) {
+    public ApiResponseDto<LoginStatusDto> getLoginStatus(@PathVariable("userId") String userId) {
         return ResponseUtils.ok(authService.checkLoginStatus(userId));
     }
 }
