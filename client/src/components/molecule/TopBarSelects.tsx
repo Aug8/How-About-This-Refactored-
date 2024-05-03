@@ -9,11 +9,13 @@ const TopBarSelects = () => {
         options={categories.map((category: string, index: number) => {
           return { value: String(index), name: category };
         })}
+        width='10vw'
       />
       <Select
         options={searchOptions.map((option: string, index: number) => {
           return { value: String(index), name: option };
         })}
+        width='10vw'
       />
     </StyledTopBarSelects>
   );

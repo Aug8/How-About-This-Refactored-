@@ -1,9 +1,14 @@
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+
 import Box from '../atom/Box';
 import ProductList from '../molecule/ProductList';
 import ProfileImg from '../atom/ProfileImg';
 import Title from '../atom/Title';
 import MediumText from '../atom/MediumText';
+
+import { getProfile } from '../../apis/api/profileApi';
+import { useParams } from 'react-router-dom';
 
 const products = [
   {
@@ -21,9 +26,34 @@ const products = [
       'https://image9.coupangcdn.com/image/vendor_inventory/8401/f64a86397b47cdb8286f616946a8cb43c4ab0364c762452940664058de73.jpg',
   },
 ];
-const UserProfile = () => {
+
+interface ProfileProps {
+  profileData: {
+    userId: string;
+    userIcon: string;
+    introduce: string;
+    nickname: string;
+  };
+  snsList: Record<string, string>;
+}
+
+const Profile = () => {
+  const { userId } = useParams();
+  const [profile, setProfile] = useState<ProfileProps>();
+
+  useEffect(() => {
+    const getProfileData = async () => {
+      console.log(userId);
+      const data = await getProfile(userId || 'defaultUserId');
+      setProfile(data);
+      console.log(data);
+    };
+
+    getProfileData();
+  }, []);
+
   return (
-    <StyledUserProfile>
+    <StyledProfile>
       <Box width='1200px'>
         <StyledBox>
           <ProfileWrapper>
@@ -37,11 +67,11 @@ const UserProfile = () => {
           <ProductList children={products} />
         </StyledBox>
       </Box>
-    </StyledUserProfile>
+    </StyledProfile>
   );
 };
 
-const StyledUserProfile = styled.div`
+const StyledProfile = styled.div`
   display: flex;
   text-align: center;
   justify-content: center;
@@ -76,4 +106,4 @@ const Line = styled.hr`
   width: 100%;
 `;
 
-export default UserProfile;
+export default Profile;

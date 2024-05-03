@@ -14,4 +14,8 @@ export const categories = [
 
 export const searchOptions = ['상품명', '작성자명', '태그명'];
 
-export const sortOptions = ['최신순', '오래된순', '좋아요순'];
+export const sortOptions = [
+  { value: 'like', name: '좋아요순' },
+  { value: 'new', name: '최신순' },
+  { value: 'old', name: '오래된순' },
+];

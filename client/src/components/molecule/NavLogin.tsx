@@ -1,23 +1,28 @@
+import { Link } from 'react-router-dom';
 import Button from '../atom/Button';
 import styled from 'styled-components';
 
 const NavLogin = () => {
   return (
     <StyledNavLogin>
-      <Button
-        id='LoginBtn'
-        text='로그인'
-        color='black'
-        width='130px'
-        height='35px'
-      />
-      <Button
-        id='JoinBtn'
-        text='회원가입'
-        color='white'
-        width='130px'
-        height='35px'
-      />
+      <Link to='/login'>
+        <Button
+          id='LoginBtn'
+          text='로그인'
+          color='black'
+          width='130px'
+          height='35px'
+        />
+      </Link>
+      <Link to='/join'>
+        <Button
+          id='JoinBtn'
+          text='회원가입'
+          color='white'
+          width='130px'
+          height='35px'
+        />
+      </Link>
     </StyledNavLogin>
   );
 };

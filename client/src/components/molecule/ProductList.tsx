@@ -17,7 +17,10 @@ const ProductList = ({ children }: ProductListProps) => {
 
 const StyledProductList = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, 280px);
+  justify-items: center;
+  justify-content: center;
+  padding: initial;
   padding-top: 35px;
 `;
 

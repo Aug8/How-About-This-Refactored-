@@ -1,17 +1,28 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
 import Logo from '../atom/Logo';
 import NavLogin from '../molecule/NavLogin';
 import NavProfile from '../molecule/NavProfile';
 import CategoryList from '../molecule/CategoryList';
 
-// todo: 로그인 여부에 따라 LavLogin/LavProfile 변경
+import { checkLogin } from '../../apis/api/userApi';
 
 const LeftNavBar = () => {
+  const [loginStatus, setLoginStatus] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const data = await checkLogin();
+      setLoginStatus(data.success);
+    };
+    checkLoginStatus();
+  }, []);
+
   return (
     <StyledLeftNavBar>
       <Logo />
-      <NavProfile />
+      {loginStatus ? <NavProfile /> : <NavLogin />}
       <CategoryList />
     </StyledLeftNavBar>
   );
@@ -28,6 +39,10 @@ export const StyledLeftNavBar = styled.div`
   box-shadow: 1px 0px 10px lightgray;
   & > * {
     margin-bottom: 40px;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 

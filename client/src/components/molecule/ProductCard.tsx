@@ -27,6 +27,7 @@ const StyledProductCard = styled.div`
   border-radius: 5px;
   cursor: pointer;
   overflow: hidden;
+  width: 250px;
 `;
 
 export default ProductCard;

@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store/store';
 import { select } from '../../store/slice/categorySlice';
 import { getAllCateName } from '../../apis/api/categoryApi';
-import { useEffect, useState } from 'react';
 
 interface CategoryProps {
   cateId: number;
