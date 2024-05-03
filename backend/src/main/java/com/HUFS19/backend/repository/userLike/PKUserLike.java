@@ -10,14 +10,15 @@ import lombok.Setter;
 import java.io.Serializable;
 
 @Embeddable
+@Setter
 @NoArgsConstructor
 @EqualsAndHashCode
 public class PKUserLike implements Serializable {
-    @Column(name = "user_id")
+//    @Column(name = "user_id")
     private String userId;
-    @Column(name = "product_id")
+//    @Column(name = "product_id")
     private int productId;
-    @Column(name = "category_id")
+//    @Column(name = "category_id")
     private int categoryId;
 
     public PKUserLike(String userId, int productId, int categoryId){

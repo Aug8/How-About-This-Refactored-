@@ -12,12 +12,13 @@ public class AuthCheckUtils {
             return "";
         }
         Optional<Authentication> authentication = Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication());
+        System.out.println(authentication);
         UserDetails userDetails = (UserDetails) authentication.get().getPrincipal();
         return userDetails.getUsername();
     }
 
     public static boolean getLoginStatus(){
         Optional<Authentication> authentication = Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication());
-        return authentication.isPresent();
+        return !(authentication.map(value -> value.getPrincipal() instanceof String).orElse(true));
     }
 }
