@@ -8,9 +8,9 @@ interface CategoryData {
 export const getAllCateName = async (): Promise<CategoryData[]> => {
   try {
     const response = await API.get(`categoryAPI/all`);
-    const data: CategoryData[] = response.data.map((item: any) => ({
-      cateId: item.cateID,
-      cateName: item.cateNAME,
+    const data: CategoryData[] = response.data.data.map((item: any) => ({
+      cateId: item.id,
+      cateName: item.name,
     }));
     return data;
   } catch (error) {
