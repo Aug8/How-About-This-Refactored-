@@ -1,7 +1,14 @@
+import { useEffect, useState } from 'react';
 import ProductListTitle from '../molecule/ProductListTitle';
 import ProductList from '../molecule/ProductList';
 
-const products = [
+import { postProducts } from '../../apis/api/productApi';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store/store';
+import { Root } from 'react-dom/client';
+
+const sample = [
   {
     name: '손선풍기',
     imgSrc: 'https://sitem.ssgcdn.com/91/71/69/item/1000543697191_i1_1100.jpg',
@@ -43,11 +50,30 @@ const products = [
   },
 ];
 
+interface ProductProps {
+  prodId: number;
+  prodName: string;
+  likecount: number;
+}
+
 const ProductListBox = () => {
+  const [products, setProducts] = useState<ProductProps[]>([]);
+  const { selectedId, sort } = useSelector(
+    (state: RootState) => state.category,
+  );
+
+  useEffect(() => {
+    const getProductsList = async () => {
+      const data = await postProducts({ categoryId: selectedId, sort });
+      console.log(data);
+    };
+
+    getProductsList();
+  }, []);
   return (
     <>
       <ProductListTitle />
-      <ProductList children={products} />
+      <ProductList children={sample} />
     </>
   );
 };

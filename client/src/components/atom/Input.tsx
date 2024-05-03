@@ -4,7 +4,7 @@ import { eventFunction } from '../../utils/types/eventFunction';
 interface InputProps {
   type?: string;
   placeholder?: string;
-  onChange?: eventFunction;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   onKeyDown?: eventFunction;
   value?: string;
   width?: string;

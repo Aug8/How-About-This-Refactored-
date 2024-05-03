@@ -24,6 +24,10 @@ const StyledTopBar = styled.div`
   background-color: white;
   box-shadow: var(--bar-shadow);
   border-left: 3px solid var(--light-grey-color);
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export default TopBar;
