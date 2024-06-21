@@ -1,4 +1,4 @@
-package com.HUFS19.backend.service.auth;
+package com.HUFS19.backend.jwt;
 
 import com.HUFS19.backend.dto.auth.CustomUserDetails;
 import com.HUFS19.backend.repository.user.User;
@@ -24,9 +24,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user= userRepository.findById(username);
-        if (user.isPresent()) {
-            return new CustomUserDetails(user.get());
-        }
-        return null;
+        return user.map(CustomUserDetails::new).orElse(null);
     }
 }

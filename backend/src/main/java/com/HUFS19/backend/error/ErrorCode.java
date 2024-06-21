@@ -12,6 +12,7 @@ public enum ErrorCode {
     USER_ID_CONFLICT(HttpStatus.CONFLICT, HttpStatus.CONFLICT.value(), "이미 존재하는 아이디입니다."),
     MISSING_CHATROOM(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.value(), "채팅방이 없습니다." ),
     MISSING_PROFILE(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.value(), "프로필이 없습니다." ),
+    AUTHENTICATION_FAIL(HttpStatus.UNAUTHORIZED, HttpStatus.NOT_FOUND.value(), "로그인에 실패했습니다." ),
     MISSING_PRODUCT(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.value(), "상품이 없습니다." );
 
     private HttpStatus status;
