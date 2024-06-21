@@ -5,6 +5,7 @@ import com.HUFS19.backend.repository.category.Category;
 import com.HUFS19.backend.repository.product.Product;
 import com.HUFS19.backend.repository.user.User;
 import com.HUFS19.backend.repository.user.UserRepositoryImp;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,9 +15,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.lang.reflect.Array;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -73,9 +73,15 @@ class UserLikeRepositoryImpTest {
         //then
         assertEquals(foundUserLikeList.size(), 2);
 
-
+        Assertions.assertThat(false).isTrue();
     }
 
+    @Test
+    void testSample(){
+        List<String> names = new ArrayList<String>(Arrays.asList("sam", "tom"));
+
+        Assertions.assertThat(names).contains("james");
+    }
     @Test
     @DisplayName("특정 유저-상품의 좋아요 유무 확인")
     void getProductLikeStatus() {

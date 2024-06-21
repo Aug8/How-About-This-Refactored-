@@ -27,7 +27,6 @@ public class JwtFilter extends OncePerRequestFilter {
         if (authorization == null || !authorization.startsWith("Bearer ")) {
 
             System.out.println("token null");
-            System.out.println(authorization);
             filterChain.doFilter(request, response);
 
             return;
